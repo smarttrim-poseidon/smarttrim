@@ -62,7 +62,7 @@ SmartTrim / POSEIDON is a team project. Each member led one subsystem; integrati
 
 | Member | Role | Individual responsibilities |
 |---|---|---|
-| **Olga [SURNAME TBC]** | Mechanical engineering and architecture | Complete mechanical architecture and structural design. V3/V5 geometry and V5 CAD. SolidWorks verification. Hydrostatic and mechanical calculations. Started the calculations module (`calculations.py`). Physical prototype design, 3D printing and assembly. Physical measurements, weighing and engineering validation. Mechanical aspects of sensor placement. |
+| **Olga [Karasavvidou]** | Mechanical engineering and architecture | Complete mechanical architecture and structural design. V3/V5 geometry and V5 CAD. SolidWorks verification. Hydrostatic and mechanical calculations. Started the calculations module (`calculations.py`). Physical prototype design, 3D printing and assembly. Physical measurements, weighing and engineering validation. Mechanical aspects of sensor placement. |
 | **Elisavet Tsifopanopoulou** | Sensors, connections and hardware–software integration | Arduino Nano + MPU6050 system and the Arduino sketch. Serial communication (first `arduino_serial.py`). Sensor data acquisition and recording. Sensor testing and debugging. First implementation of the Streamlit dashboard (`app.py`). |
 | **Zoi Theofilakou** | Software development, computer vision and integration | Computer vision: ArUco detection (`vision/aruco_check.py`) and the draft-from-photo prototype (`vision/cv_draft.py`). Sensor replay and recorded/simulated data labelling. Alert logic and rule-based alert explanations. Continued development of `calculations.py` with Olga and of `app.py` with Elisavet. Testing, debugging, integration and release packaging. |
 

@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "If you reference this project, please cite it as below."
 title: "SmartTrim / POSEIDON: twin-pontoon model vessel with sensor dashboard and computer vision test replay"
 type: software
-authors:
+authors:Olga Karasavvidou
   # Alphabetical order by given name. PUBLICATION TODO: Olga's family name.
   - given-names: Elisavet
     family-names: Tsifopanopoulou

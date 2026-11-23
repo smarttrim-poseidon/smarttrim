@@ -1,6 +1,6 @@
 # Contributors
 
-SmartTrim / POSEIDON was developed by **Olga [SURNAME TBC]**, **Elisavet Tsifopanopoulou** and **Zoi Theofilakou**.
+SmartTrim / POSEIDON was developed by **Olga [Karasavvidou]**, **Elisavet Tsifopanopoulou** and **Zoi Theofilakou**.
 
 This file records who was responsible for what. It is based on the team's own account of its work, agreed by all three members. Git history is **not** a reliable source: this repository was assembled from a private development repository, and some original work was merged there through combined commits.
 

@@ -29,7 +29,7 @@ This file records who was responsible for what. It is based on the team's own ac
 | `app.py` | Elisavet | Elisavet and Zoi |
 | `arduino/smarttrim_mpu6050.ino` | Elisavet | |
 | `arduino_serial.py`, `test_arduino_serial.py` | Elisavet | Integration changes |
-| `sensor_log.py`, `test_sensor_log.py` | **[SPLIT TBC]** Recording format: Elisavet. Replay and source labels: Zoi. | |
+| `sensor_log.py`, `test_sensor_log.py` | **[Shared contribution by Zoi Theofilakou and Elisavet Tsifopanopoulou]** Recording format: Elisavet. Replay and source labels: Zoi. | |
 | `alert_explainer.py`, `test_alert_explainer.py` | Zoi | |
 | `vision/aruco_check.py` | Zoi | |
 | `vision/cv_draft.py`, `vision/test_cv_draft.py`, `vision/README.md` | Zoi | |

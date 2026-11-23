@@ -26,7 +26,7 @@ SmartTrim is a prototype for a tank test. It is not a navigation or safety syste
 Requires Python 3.10+ (developed on 3.11).
 
 ```bash
-git clone https://github.com/ORG/REPO.git
+git clone https://github.com/smarttrim-poseidon/smarttrim.git
 cd REPO
 python -m venv .venv
 # Windows: .venv\Scripts\activate    macOS/Linux: source .venv/bin/activate

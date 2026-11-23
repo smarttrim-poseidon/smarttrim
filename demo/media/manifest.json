@@ -1,0 +1,93 @@
+{
+  "clips": [
+    {
+      "id": "katamaran_10",
+      "label": "Bench — katamaran_10 (moving camera)",
+      "camera": "moving",
+      "environment": "Bench",
+      "camera_description": "Moving camera",
+      "video": "katamaran_10/video.mp4",
+      "detections": "katamaran_10/detections.csv",
+      "frame_times": "katamaran_10/frame_times.json",
+      "dictionary": "DICT_4X4_50",
+      "marker_id": 0,
+      "marker_mm": 40.0,
+      "detection_rows": 1007,
+      "detected_frames": 492,
+      "frame_count": 1007,
+      "default_range": null,
+      "segments": []
+    },
+    {
+      "id": "camera_stable",
+      "label": "Bench — camera_stable (fixed camera)",
+      "camera": "fixed",
+      "environment": "Bench",
+      "camera_description": "Fixed camera, low viewpoint",
+      "video": "camera_stable/video.mp4",
+      "detections": "camera_stable/detections.csv",
+      "frame_times": "camera_stable/frame_times.json",
+      "dictionary": "DICT_4X4_50",
+      "marker_id": 0,
+      "marker_mm": 40.0,
+      "detection_rows": 910,
+      "detected_frames": 255,
+      "frame_count": 910,
+      "default_range": {
+        "start_s": 0.0,
+        "end_s": 30.0,
+        "first_frame": 0,
+        "last_frame": 719
+      },
+      "segments": [
+        {
+          "kind": "invalid",
+          "annotation": "manual",
+          "start_frame": 769,
+          "end_frame": 909,
+          "start_s": 32.083333,
+          "end_s": 37.916667,
+          "label": "Invalid for vessel tracking \u2014 marker detached",
+          "note": "Frame-by-frame review: the marker card sits on the deck through frame 768, starts sliding off at frame 769 and lies on the table from frame 778. ID 0 is detected on the table from frame 780 to the end."
+        }
+      ]
+    },
+    {
+      "id": "water_controlled",
+      "label": "Water Tank \u2014 Controlled Motion",
+      "camera": "moving",
+      "environment": "Water tank",
+      "camera_description": "Handheld, approximately stationary camera",
+      "video": "water_controlled/video.mp4",
+      "detections": "water_controlled/detections.csv",
+      "frame_times": "water_controlled/frame_times.json",
+      "dictionary": "DICT_4X4_50",
+      "marker_id": 0,
+      "marker_mm": 40.0,
+      "detection_rows": 1767,
+      "detected_frames": 1532,
+      "frame_count": 1767,
+      "default_range": null,
+      "segments": []
+    }
+  ],
+  "cad_mesh": {
+    "path": "cad/v5_preview.stl",
+    "source": "SmartTrim_V5_SLEEK_Arova_Print_SolidWorks (1).zip:smarttrim/V5_SLEEK_CAD/SmartTrim_V5_COMPLETE_Assembly_PREVIEW_ONLY.stl",
+    "label": "V5 CAD preview mesh (visual only, nominal geometry)",
+    "bounds_mm": [
+      [
+        -100.03,
+        -83.98,
+        0.0
+      ],
+      [
+        100.0,
+        84.0,
+        98.4
+      ]
+    ],
+    "axes": "CAD: x bow +, z up from keel; shown with three.js X bow, Y up, Z starboard"
+  },
+  "shared_timeline_links": []
+}

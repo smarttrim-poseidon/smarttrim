@@ -1,0 +1,4 @@
+# Computer vision tools (vision/) and demo media preparation (demo/prepare_media.py).
+# Tested with opencv-python-headless 4.11 and numpy 2.4 on Python 3.11.
+opencv-python-headless>=4.7
+numpy>=1.24

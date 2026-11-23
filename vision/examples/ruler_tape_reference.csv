@@ -1,0 +1,2 @@
+run_id,image,side,station,station_x_from_stern_mm,manual_draft_mm,observed_at,notes
+DRY_TAPE_01,ruler_tape.jpg,bench,ruler,,24.5,2026-11-21,"By-eye reading from an 8x zoom against the 25 mm tick, recorded before the detector existed. Target: lower physical edge of the tape (bottom of its white lip, grey shadow line). The yellow colour ends higher, at about 25.3 mm by eye."

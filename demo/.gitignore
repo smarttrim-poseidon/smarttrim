@@ -1,0 +1,3 @@
+# Prepared media in media/ is committed so the demo runs from a clone and on GitHub Pages.
+# Keep raw source recordings outside the repository.
+*.mov

@@ -1,0 +1,14 @@
+{
+  "description": "Dry bench test on photos/ruler_tape.jpg (1152 x 1536 px). One cm ruler, vertical in the image; tape to its left. Tick centres measured at x = 340 px.",
+  "rulers": [
+    {
+      "station": "ruler",
+      "point_a": {"x": 340.0, "y": 1167.3, "mm": 20.0},
+      "point_b": {"x": 340.0, "y": 1052.0, "mm": 30.0},
+      "strip_offset_px": -60,
+      "strip_width_px": 50,
+      "search_mm": [15.0, 35.0],
+      "zero_offset_mm": 0.0
+    }
+  ]
+}

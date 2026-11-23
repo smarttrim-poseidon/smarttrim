@@ -1,0 +1,12 @@
+* text=auto eol=lf
+*.bat text eol=crlf
+# Data and media must stay byte-identical (their SHA-256 checksums are tested).
+*.mp4 binary
+*.stl binary
+*.png binary
+*.jpg binary
+*.csv -text
+demo/media/** -text
+demo/samples/** -text
+recordings/** -text
+vision/examples/** -text

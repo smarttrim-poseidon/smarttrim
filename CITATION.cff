@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you reference this project, please cite it as below."
+title: "SmartTrim / POSEIDON: twin-pontoon model vessel with sensor dashboard and computer vision test replay"
+type: software
+authors:
+  # Alphabetical order by given name. PUBLICATION TODO: Olga's family name.
+  - given-names: Elisavet
+    family-names: Tsifopanopoulou
+  - given-names: Olga
+  - given-names: Zoi
+    family-names: Theofilakou
+version: "1.0.0"
+# PUBLICATION TODO: date-released, repository-code, url and license once decided.
+keywords:
+  - naval architecture
+  - hydrostatics
+  - Arduino
+  - MPU6050
+  - Streamlit
+  - OpenCV
+  - ArUco
+  - three.js

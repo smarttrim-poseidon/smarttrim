@@ -1,0 +1,85 @@
+{
+  "note": "Presentation jump points for ArUco Detection Review. Each point is re-checked against the prepared media when the page loads; a point that no longer matches is disabled, not shown with a misleading label.",
+  "jump_points": [
+    {
+      "id": "closeup",
+      "title": "Close-up detected",
+      "clip": "katamaran_10",
+      "range": "full",
+      "frame": 168,
+      "approx_s": 7.0,
+      "expect": {"detected": true, "invalid": false},
+      "caption": "Moving camera, close-up: ArUco finds marker ID 0. The outline and numbered corners come from the detection CSV for this exact frame."
+    },
+    {
+      "id": "lost",
+      "title": "Detection lost",
+      "clip": "camera_stable",
+      "range": "default",
+      "frame": 144,
+      "approx_s": 6.0,
+      "expect": {"detected": false, "invalid": false},
+      "caption": "Fixed camera, pitch tilt: the marker is almost edge-on to the camera and ArUco does not detect it. No outline is drawn and no value is invented."
+    },
+    {
+      "id": "roll",
+      "title": "Roll tilt detected",
+      "clip": "camera_stable",
+      "range": "default",
+      "frame": 432,
+      "approx_s": 18.0,
+      "expect": {"detected": true, "invalid": false},
+      "caption": "Fixed camera, roll tilt: the deck turns toward the camera and ArUco finds marker ID 0 again."
+    },
+    {
+      "id": "detached",
+      "title": "Marker detached",
+      "clip": "camera_stable",
+      "range": "full",
+      "frame": 840,
+      "approx_s": 35.0,
+      "expect": {"detected": true, "invalid": true},
+      "caption": "The marker card has fallen onto the table. ArUco still detects ID 0, but a manual frame-by-frame review marks this stretch as invalid for vessel tracking."
+    },
+    {
+      "id": "water_floating",
+      "title": "Floating vessel, marker detected",
+      "clip": "water_controlled",
+      "range": "full",
+      "frame": 144,
+      "approx_s": 6.04,
+      "expect": {"detected": true, "invalid": false},
+      "caption": "Water tank, handheld and approximately stationary camera: the tethered vessel floats untouched and ArUco finds marker ID 0."
+    },
+    {
+      "id": "water_guided",
+      "title": "Hand-guided movement, marker detected",
+      "clip": "water_controlled",
+      "range": "full",
+      "frame": 800,
+      "approx_s": 33.36,
+      "expect": {"detected": true, "invalid": false},
+      "caption": "Water tank: the vessel is moved by hand and marker ID 0 is still detected. Detection status and corners only; no roll, pitch or stability value is derived."
+    },
+    {
+      "id": "water_lost",
+      "title": "Marker visible, detection lost",
+      "clip": "water_controlled",
+      "range": "full",
+      "frame": 1100,
+      "approx_s": 45.84,
+      "expect": {"detected": false, "invalid": false},
+      "caption": "Water tank: the marker is in view and not covered, but ArUco does not detect it from 43.44 s to 49.16 s; its black border appears faded on one side. No outline is drawn and no value is invented."
+    },
+    {
+      "id": "water_tilted",
+      "title": "Tilted marker, intermittent detection",
+      "clip": "water_controlled",
+      "range": "full",
+      "frame": 1370,
+      "approx_s": 57.12,
+      "expect": {"detected": false, "invalid": false},
+      "caption": "Water tank: the marker is strongly foreshortened. From 55.28 s to 60.12 s detection flickers on and off (62 of 117 frames); this frame is one where it is not detected."
+    }
+  ]
+}

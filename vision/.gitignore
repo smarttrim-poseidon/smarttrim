@@ -1,0 +1,8 @@
+# Generated outputs and raw photos/videos stay out of Git.
+output/
+*.jpg
+*.jpeg
+*.png
+*.heic
+*.mp4
+*.mov

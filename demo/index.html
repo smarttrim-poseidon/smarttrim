@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SmartTrim V5 · Test Replay</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script type="importmap">
+    {"imports": {"three": "./vendor/three/three.module.min.js",
+                 "three/addons/": "./vendor/three/addons/"}}
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M3 20h26l-4 6H7z" fill="currentColor" opacity=".9"/>
+        <path d="M9 18V8l9 10z" fill="currentColor" opacity=".55"/>
+        <path d="M2 29c3 0 3-1.5 6-1.5S11 29 14 29s3-1.5 6-1.5 3 1.5 6 1.5 3-1.5 4-1.5" stroke="currentColor" stroke-width="1.6" fill="none" opacity=".5"/>
+      </svg>
+      <div>
+        <h1>SmartTrim V5 <span class="h1-sub">Test Replay</span></h1>
+        <p class="subtitle">Prototype testing · computer vision · sensor replay — offline engineering review, not a navigation or safety system</p>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="viewswitch" role="group" aria-label="View">
+        <button class="vs" data-view="engineering" id="view-engineering" aria-pressed="true" title="Full technical detail">Engineering</button>
+        <button class="vs" data-view="showcase" id="view-showcase" aria-pressed="false" title="Presentation layout for 1920×1080">Showcase</button>
+      </div>
+      <nav class="tabs" role="tablist">
+        <button class="tab active" role="tab" data-tab="detection" id="tab-detection"><span class="tab-no">1</span>ArUco Detection Review</button>
+        <button class="tab" role="tab" data-tab="replay" id="tab-replay"><span class="tab-no">2</span>3D Motion Replay</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===================== Tab 1: ArUco Detection Review ===================== -->
+    <section class="panel active" id="panel-detection" role="tabpanel">
+      <div class="recbar">
+        <div class="steps" id="rec-steps" role="group" aria-label="Recordings, from bench to water tank"></div>
+        <select id="clip-select" hidden aria-hidden="true"></select>
+        <div class="recbar-tools">
+          <label class="field">Range <select id="range-select"></select></label>
+          <button class="btn present-toggle" id="present-toggle" aria-pressed="false">Presentation mode</button>
+        </div>
+      </div>
+
+      <div class="jump-bar" id="jump-bar">
+        <span class="jump-label">Highlights</span>
+        <div class="jump-buttons" id="jump-buttons"></div>
+        <details class="jump-all" id="jump-all">
+          <summary>All highlights</summary>
+          <div class="jump-all-list" id="jump-all-list"></div>
+        </details>
+      </div>
+      <p class="sc-caption sc-only" id="sc-caption" hidden></p>
+
+      <div class="det-grid">
+        <div class="stage" id="video-stage">
+          <video id="video" muted playsinline preload="auto"></video>
+          <canvas id="overlay"></canvas>
+          <div class="stage-tags">
+            <span class="tag tag-real" id="clip-source-badge">Real video</span>
+            <span class="tag" id="clip-marker-badge"></span>
+          </div>
+          <div class="banner banner-invalid" id="segment-banner" hidden></div>
+          <div class="empty-state" id="detection-empty" hidden></div>
+        </div>
+
+        <aside class="card live">
+          <div class="card-kicker">Detector output · this frame</div>
+          <div class="status-chip" id="detection-status">Loading…</div>
+          <div class="status-chip bad" id="segment-status" hidden></div>
+          <p class="segment-reason" id="segment-reason" hidden></p>
+          <p class="frame-line" id="frame-line"></p>
+          <p class="jump-caption" id="jump-caption" hidden></p>
+          <details class="disclosure" id="frame-details" open>
+            <summary>Frame details</summary>
+            <dl class="readout">
+              <dt>Frame</dt><dd id="ro-frame">—</dd>
+              <dt>Video time</dt><dd id="ro-time">—</dd>
+              <dt>CSV time_s (nominal)</dt><dd id="ro-csv-time">—</dd>
+              <dt>Mean side</dt><dd id="ro-side">—</dd>
+              <dt>Other IDs</dt><dd id="ro-other">—</dd>
+              <dt>Segment</dt><dd id="ro-segment">—</dd>
+            </dl>
+            <table class="corners" id="corner-table">
+              <thead><tr><th>Corner</th><th>x (px)</th><th>y (px)</th></tr></thead>
+              <tbody></tbody>
+            </table>
+            <p class="hint" id="detection-summary"></p>
+          </details>
+          <details class="disclosure tech-notes" id="tech-notes">
+            <summary>Technical notes</summary>
+            <p class="note-text" id="camera-notice"></p>
+            <p class="note-text"><b>Pipeline.</b> OpenCV ArUco, dictionary DICT_4X4_50, marker ID 0, sub-pixel corner refinement, run offline on every frame of the upright video (<code>vision/aruco_check.py --scan</code>). The page shows only what the detection CSV records; frames are matched to video time with the MP4's own presentation timestamps.</p>
+            <p class="note-text"><b>Overlay.</b> Corners are numbered in the marker's own order (0 top-left, clockwise) and drawn only on frames where the CSV records a detection. A dashed red outline marks a detection inside a manually annotated invalid segment.</p>
+            <p class="note-text"><b>Statistics.</b> Counted in the browser from each recording's detection CSV. Rates depend on camera viewpoint, distance, lighting and motion, so they are not a like-for-like comparison and not a measure of vessel stability.</p>
+            <p class="note-text" id="shared-gate-detection"></p>
+          </details>
+          <p class="qualifier">Shows marker detection and corners only — no pose, roll, pitch or stability is derived from the video.</p>
+        </aside>
+
+        <section class="card results" id="det-stats" aria-label="Detection statistics">
+          <div class="card-kicker">Detection statistics <span class="kicker-sub">counted from each recording's detection CSV</span></div>
+          <div class="hero">
+            <div class="hero-main">
+              <h3 id="stats-title">—</h3>
+              <p class="stats-camera" id="stats-camera"></p>
+            </div>
+            <div class="hero-rates" id="stats-hero"></div>
+          </div>
+          <dl class="tiles" id="stats-readout"></dl>
+          <div class="compare">
+            <h4>Marker ID 0 detection rate by recording</h4>
+            <div class="bar-chart" id="stats-chart" role="list" aria-label="Detection rate of each recording"></div>
+          </div>
+          <div class="pipeline">
+            <h4>How the numbers are produced</h4>
+            <ol class="pipeline-steps">
+              <li><b>Record</b><span>Video of the V5 prototype carrying a 40 mm ArUco marker on its deck.</span></li>
+              <li><b>Detect</b><span>OpenCV ArUco (DICT_4X4_50) searches every frame for marker ID 0.</span></li>
+              <li><b>Log</b><span>Each frame's result and the marker's four corners are written to a CSV.</span></li>
+              <li><b>Count</b><span>Detection rate = frames with ID 0 detected ÷ frames analysed.</span></li>
+            </ol>
+          </div>
+          <p class="stats-note">Detection rates reflect different camera viewpoints and recording conditions; they are not direct measures of vessel stability.</p>
+        </section>
+
+        <!-- Showcase View only: summary beside the large video (values come from the same CSV statistics) -->
+        <aside class="sc-side sc-only" id="sc-side" aria-label="Showcase summary">
+          <div class="sc-head">
+            <div class="sc-kicker">Computer vision · ArUco marker ID 0</div>
+            <h2 id="sc-title">—</h2>
+            <p class="sc-camera" id="sc-camera"></p>
+          </div>
+          <div class="sc-rate" id="sc-rate"></div>
+          <div class="sc-row">
+            <figure class="sc-zoom">
+              <canvas id="sc-zoom"></canvas>
+              <figcaption id="sc-zoom-label">Marker close-up</figcaption>
+            </figure>
+            <div class="sc-now">
+              <div class="sc-kicker">This frame</div>
+              <div class="sc-indicator" id="sc-indicator"><span id="sc-indicator-text">—</span></div>
+              <div class="sc-indicator bad" id="sc-invalid" hidden><span>Invalid for vessel tracking — manually annotated</span></div>
+              <div class="sc-frame" id="sc-frame"></div>
+            </div>
+          </div>
+          <div class="sc-compare">
+            <div class="sc-kicker">Detection rate · bench → water</div>
+            <div class="sc-chart" id="sc-chart"></div>
+          </div>
+          <div class="sc-foot">
+            <p class="sc-note">Detection rates reflect different camera viewpoints and recording conditions; they are not direct measures of vessel stability.</p>
+            <details class="sc-notes">
+              <summary>Technical notes</summary>
+              <p>ArUco finds marker ID 0 (DICT_4X4_50) and its four corners in each frame; it does not measure roll, pitch, stability or recovery. The recordings use different camera positions (bench: moving camera, low fixed camera; water tank: handheld, approximately stationary camera from above), so their rates are not a like-for-like comparison. For the fixed-camera bench recording, frames 769–909 are excluded from the valid-frames rate because the marker card had fallen off. The close-up is a magnified crop of the current video frame with the CSV corners drawn on it. Frame coordinates and full statistics are in the Engineering view.</p>
+            </details>
+          </div>
+        </aside>
+      </div>
+
+      <div class="transport">
+        <button id="det-play" class="btn primary">▶ Play</button>
+        <button id="det-prev" class="btn" title="Previous frame">◀ Frame</button>
+        <button id="det-next" class="btn" title="Next frame">Frame ▶</button>
+        <label class="field">Speed <select id="det-speed">
+          <option value="0.25">0.25×</option><option value="0.5">0.5×</option>
+          <option value="1" selected>1×</option></select></label>
+        <div class="timeline">
+          <input type="range" id="det-slider" min="0" max="0" step="1" value="0" aria-label="Frame timeline">
+          <canvas id="det-strip" class="strip" title="Green: marker ID 0 detected · grey: not detected · dark: no detection data · red: invalid segment (bright red where the marker is still detected)"></canvas>
+          <div class="strip-legend"><span class="sw sw-ok"></span>detected <span class="sw sw-miss"></span>not detected <span class="sw sw-invalid"></span>invalid for vessel tracking</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== Tab 2: 3D Motion Replay ===================== -->
+    <section class="panel" id="panel-replay" role="tabpanel">
+      <div class="recbar">
+        <div class="recbar-left">
+          <label class="field">Recording <select id="rec-select"></select></label>
+          <label class="btn file-btn">Load sensor CSV…<input type="file" id="rec-file" accept=".csv,text/csv"></label>
+        </div>
+        <div class="recbar-tools">
+          <span class="badge" id="rec-source-badge"></span>
+          <span class="badge" id="model-badge">Loading model…</span>
+        </div>
+      </div>
+
+      <div class="rep-grid">
+        <div class="stage stage-3d" id="three-stage">
+          <div class="banner" id="no-sample-banner" hidden>No sensor sample at this time — attitude not shown</div>
+          <!-- Showcase View only: overlays mirror the replay readouts (no values are computed here) -->
+          <div class="sc-only sc-rep-top">
+            <span class="sc-source" id="sc-rep-source">—</span>
+            <span class="sc-rep-rec" id="sc-rep-rec"></span>
+          </div>
+          <div class="sc-only sc-att">
+            <div class="sc-att-card sc-att-roll"><span class="sc-att-label">Roll</span><b id="sc-roll">—</b><small>+ = starboard side down</small></div>
+            <div class="sc-att-card sc-att-pitch"><span class="sc-att-label">Pitch</span><b id="sc-pitch">—</b><small>+ = bow up</small></div>
+            <div class="sc-att-time" id="sc-rtime"></div>
+          </div>
+          <div class="sc-only sc-rep-caveat">
+            <p>Recorded or simulated roll and pitch replayed on the nominal V5 CAD geometry — a visualization, not a hydrodynamic simulation.</p>
+            <details class="sc-notes">
+              <summary>Technical notes</summary>
+              <p>The sign convention (+ roll = starboard side down, + pitch = bow up) is a display convention: the MPU6050's physical axis mapping on the boat is not yet verified. The recorded MPU6050 file is a real recording made on the bench, not on water. Simulated data is generated for demonstration and is not measured. Gaps in a recording are shown as a grey outline and are never filled.</p>
+            </details>
+          </div>
+          <div class="legend3d"><span class="ax ax-bow">Orange arrow: bow (moves with the boat)</span><span class="ax ax-x">X bow</span><span class="ax ax-y">Y up</span><span class="ax ax-z">Z starboard</span><span class="ax">grid: fixed reference, not a waterline</span></div>
+        </div>
+        <aside class="card live">
+          <div class="card-kicker">Attitude · this sample</div>
+          <div class="status-chip" id="replay-status">Loading…</div>
+          <div class="att-tiles">
+            <div class="att att-roll"><span class="att-label">Roll</span><span class="att-value" id="ro-roll">—</span><span class="att-hint">+ = starboard side down</span></div>
+            <div class="att att-pitch"><span class="att-label">Pitch</span><span class="att-value" id="ro-pitch">—</span><span class="att-hint">+ = bow up</span></div>
+          </div>
+          <dl class="readout">
+            <dt>Time</dt><dd id="ro-rtime">—</dd>
+            <dt>Samples</dt><dd id="ro-samples">—</dd>
+          </dl>
+          <p class="hint" id="rec-notes"></p>
+          <details class="disclosure tech-notes">
+            <summary>Technical notes</summary>
+            <p class="note-text" id="axis-notice">Demo sign convention: <b>+ roll = starboard side down</b>, <b>+ pitch = bow up</b>.
+              The MPU6050 axis mapping and signs on the boat are not yet bench-verified.</p>
+            <p class="note-text"><b>Source labels.</b> The label follows the selected recording's <code>source</code> column: <i>simulated</i> is labelled Simulated data (not measured); <i>arduino_mpu6050</i> is labelled Recorded MPU6050 data; anything else is shown as not confirmed as measured.</p>
+            <p class="note-text"><b>Gaps.</b> A sample counts only within 1.5× the median sample interval; otherwise the model turns into a grey outline and nothing is held over or interpolated.</p>
+            <div class="check" id="orientation-check"><h3>Orientation check</h3><ul></ul></div>
+            <p class="note-text" id="shared-gate-replay"></p>
+          </details>
+          <p class="qualifier">Display convention only — the sensor's axis mapping on the boat is not yet bench-verified.</p>
+        </aside>
+      </div>
+
+      <div class="transport">
+        <button id="rep-play" class="btn primary">▶ Play</button>
+        <label class="field">Speed <select id="rep-speed">
+          <option value="0.5">0.5×</option><option value="1" selected>1×</option>
+          <option value="2">2×</option></select></label>
+        <div class="timeline">
+          <input type="range" id="rep-slider" min="0" max="0" step="0.01" value="0" aria-label="Replay timeline">
+          <canvas id="rep-chart" class="chart" title="Roll (orange) and pitch (cyan) in degrees; gaps are not joined"></canvas>
+          <div class="strip-legend"><span class="sw sw-roll"></span>roll <span class="sw sw-pitch"></span>pitch <span class="sw sw-gap"></span>gap (not joined)</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

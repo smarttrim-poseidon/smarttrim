@@ -1,0 +1,31 @@
+{
+  "source_file": "V5_CAD_Verification_and_Hydrostatics.json",
+  "source_field": "capacity_still_water",
+  "cad_revision": "V5 SLEEK pre-print release, created 20–21 November 2026",
+  "status": "nominal CAD only; no tank test, no CFD, no slicer validation",
+  "units": {
+    "draft": "mm",
+    "displacement": "freshwater_displacement_g"
+  },
+  "reference_water_density_kg_m3": 1000.0,
+  "reference_density_source": "README_FIRST_SmartTrim_V5.md: Still freshwater (density 1000 kg/m³)",
+  "covers": "both pontoons together",
+  "coverage_cross_check": "README nominal 458.1 g two-pontoon load matches the 33.6 mm CAD estimate",
+  "core_print_mass_g": 308.1,
+  "capacity_still_water": [
+    {"draft_mm": 0, "freshwater_displacement_g": 0.0},
+    {"draft_mm": 5, "freshwater_displacement_g": 51.55},
+    {"draft_mm": 10, "freshwater_displacement_g": 114.12},
+    {"draft_mm": 15, "freshwater_displacement_g": 183.54},
+    {"draft_mm": 20, "freshwater_displacement_g": 255.98},
+    {"draft_mm": 25, "freshwater_displacement_g": 330.05},
+    {"draft_mm": 30, "freshwater_displacement_g": 404.11},
+    {"draft_mm": 35, "freshwater_displacement_g": 478.19},
+    {"draft_mm": 40, "freshwater_displacement_g": 552.31},
+    {"draft_mm": 45, "freshwater_displacement_g": 626.46},
+    {"draft_mm": 50, "freshwater_displacement_g": 700.48},
+    {"draft_mm": 55, "freshwater_displacement_g": 773.81},
+    {"draft_mm": 60, "freshwater_displacement_g": 846.59},
+    {"draft_mm": 65, "freshwater_displacement_g": 918.81}
+  ]
+}
